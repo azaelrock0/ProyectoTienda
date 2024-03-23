@@ -1,0 +1,39 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.tableImage {
+    display: inline-block;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+    .tableImage img {
+        max-width: 100%;
+        height: auto;
+    }
+.detailsImage {
+    display: inline-block;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+    .detailsImage img {
+        max-width: 100%;
+        height: auto;
+    }
