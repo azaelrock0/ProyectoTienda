@@ -1,0 +1,70 @@
+﻿@model Entidades.ArticuloViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Articulo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+        <dt class="">
+            @Html.DisplayNameFor(model => model.Imagen)
+        </dt>
+        <dd class="">
+            @if (@Model.Imagen != "" && @Model.Imagen != null)
+            {
+                <div class="detailsImage">
+                    <img src="~/images/@Model.Imagen" />
+                </div>
+            }
+            else
+            {
+                <p>No dispoble</p>
+            }
+        </dd>
+        <dt class="">
+            @Html.DisplayNameFor(model => model.Tiendas)
+        </dt>
+        <dd class="">
+            @if (Model.Tiendas.Count > 0)
+            {
+                <ul>
+                    @foreach (var tienda in Model.Tiendas)
+                    {
+                        <li>@tienda.Sucursal</li>
+                    }
+                </ul>
+                
+            }
+            else
+            {
+                <div>No disponible</div>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

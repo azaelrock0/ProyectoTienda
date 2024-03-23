@@ -1,0 +1,109 @@
+﻿@model Entidades.ArticuloViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Articulo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" id="formulario">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" accept=".jpg,.png,.jpeg">
+                <input asp-for="ImageName" id="imageName" hidden/>
+                <span asp-validation-for="ImageFile" class="text-danger" id="fileValidation"></span>
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stock" class="control-label"></label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TiendasID" class="control-label"></label>
+                <br />
+                <select multiple id="tiendasDropdown" asp-items="@(new SelectList(Model.Tiendas, "Id", "Sucursal"))" placeholder="select members">
+                    </select>
+                <select multiple asp-for="TiendasID" id="tiendasDropdownPost" asp-items="@(new SelectList(Model.Tiendas, "Id", "Sucursal"))" placeholder="select members" class="" hidden>
+                </select>
+                    <span asp-validation-for="TiendasID" class="text-danger" id="dropDownValidation"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" onclick="return validation()" />
+            </div>
+            <br />
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        VirtualSelect.init({
+            ele: '#tiendasDropdown',
+            multiple: true,
+        });
+        document.querySelector('#tiendasDropdown').addEventListener('change', function () {
+            $('#tiendasDropdownPost').val(this.value);
+        });
+
+        document.getElementById("ImageFile").addEventListener("change", validateFile)
+
+        function validateFile() {
+            const allowedExtensions = ['jpg', 'png', 'jpeg'],
+                sizeLimit = 5*1024*1024;
+
+            const { name: fileName, size: fileSize } = this.files[0];
+
+            const fileExtension = fileName.split(".").pop();
+            if (!allowedExtensions.includes(fileExtension)) {
+                $('#fileValidation').text("Solo se permiten archivos .png y .jpg");
+                this.value = null;
+            } else if (fileSize >= sizeLimit) {
+                $('#fileValidation').text("No se permiten imágenes de más de 5 MB");
+                this.value = null;
+            } else if (fileName.length > 50) {
+                $('#fileValidation').text("El nombre de la imagen no puede tener más de 50 carácteres.");
+                this.value = null;
+            } else {
+                $('#fileValidation').text("");
+                $('#imageName').val(fileName)
+            }
+        }
+
+        function validation() {
+            var options = $('#tiendasDropdownPost > option:selected');
+            if (options.length == 0){
+                $('#dropDownValidation').text("Se debe seleccionar al menos una tienda.");
+                return false;
+            }
+        else {
+                $('#dropDownValidation').text("");
+                document.getElementById("formulario").submit();
+            }
+        }
+    </script>
+    
+}

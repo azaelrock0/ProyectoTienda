@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Entidades.Articulo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td class="align-middle">
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+                <td class="align-middle">
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+                <td class="align-middle">
+                    @if (@item.Imagen != "" && @item.Imagen != null)
+                    {
+                        <div class="tableImage">
+                            <img src="~/images/@item.Imagen" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="align-middle">No dispoble</div>
+                    }
+                </td>
+                <td class="align-middle">
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+                <td class="align-middle">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Details</a>
+                </td>
+                <td class="align-middle">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a>
+                </td>
+                <td class="align-middle">
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

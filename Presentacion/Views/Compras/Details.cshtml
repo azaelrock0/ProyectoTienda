@@ -1,0 +1,63 @@
+﻿@model Entidades.Articulo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Articulo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+        <dt class="">
+            @Html.DisplayNameFor(model => model.Imagen)
+        </dt>
+        <dd class="">
+            @if (@Model.Imagen != "" && @Model.Imagen != null)
+            {
+                <div class="detailsImage">
+                    <img src="~/images/@Model.Imagen" />
+                </div>
+            }
+            else
+            {
+                <p>No dispoble</p>
+            }
+        </dd>
+        <input type="hidden" asp-for="Id" />
+    </dl>
+</div>
+<div>
+    <form asp-action="AddToCart">
+        <input type="hidden" asp-for="Id" />
+        @if (ViewBag.ExisteEnCarrito)
+        {
+            <input type="submit" value="Agregar al Carrito" class="btn btn-primary" disabled />
+        }
+        else
+        {
+            <input type="submit" value="Agregar al Carrito" class="btn btn-primary" />
+        }        
+        <br />
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

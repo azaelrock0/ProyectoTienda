@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Entidades.Articulo>
+
+@{
+    Layout = "~/Views/Shared/_LayoutCompras.cshtml";
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+<div class="row">
+    <div class="col"><h1 class="mb-0">Hola, @ViewData["nombreUsuario"]</h1></div>
+    <div class="col align-self-end"><a asp-action="Carrito" class="float-end btn btn-success">Ver Carrito <i class="bi bi-cart4"></i></a></div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td class="align-middle">
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+                <td class="align-middle">
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+                <td class="align-middle">
+                    @if (@item.Imagen != "" && @item.Imagen != null)
+                    {
+                        <div class="tableImage">
+                            <img src="~/images/@item.Imagen" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="align-middle">No dispoble</div>
+                    }
+                </td>
+                <td class="align-middle">
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td class="align-middle">
+            <td class="align-middle">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning">Ver detalles</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
